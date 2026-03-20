@@ -99,4 +99,27 @@ describe('Testando o formulário de adicionar perfil do GitHub', () => {
     cy.contains('tr', 'xsalles')
     cy.contains('tr', 'Dev Front-End')
   })
+
+  it('Tentar remover perfil', () => {
+    cy.visit(`${url}`)
+
+    cy.get('#email').type('4dt@gmail.com')
+    cy.get('#password').type('4DT')
+
+    cy.get('button[type="submit"]').click()
+
+    cy.visit(`${url}/github`)
+
+    cy.get('#name').type('Pedro')
+    cy.get('#username').type('xsalles')
+    cy.get('#profile').type('Dev Front-End')
+
+    cy.get('button[type="submit"]').click()
+
+    cy.get('.lucide.lucide-trash2').click()
+    
+    cy.get('tr').should('not.contain', 'Pedro')
+    cy.get('tr').should('not.contain', 'xsalles')
+    cy.get('tr').should('not.contain', 'Dev Front-End')
+  })
 })
