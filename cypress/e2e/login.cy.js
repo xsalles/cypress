@@ -77,3 +77,26 @@ describe('Testando o cadastro', () => {
     cy.contains('p', 'Essa senha está meio fraquinha... que tal uma com pelo menos 6 caracteres? 💪')
   })
 })
+
+describe('Testando o formulário de adicionar perfil do GitHub', () => {
+  it('Adicionar perfil do GitHub com sucesso', () => {
+    cy.visit(`${url}`)
+
+    cy.get('#email').type('4dt@gmail.com')
+    cy.get('#password').type('4DT')
+
+    cy.get('button[type="submit"]').click()
+
+    cy.visit(`${url}/github`)
+
+    cy.get('#name').type('Pedro')
+    cy.get('#username').type('xsalles')
+    cy.get('#profile').type('Dev Front-End')
+
+    cy.get('button[type="submit"]').click()
+    
+    cy.contains('tr', 'Pedro')
+    cy.contains('tr', 'xsalles')
+    cy.contains('tr', 'Dev Front-End')
+  })
+})
