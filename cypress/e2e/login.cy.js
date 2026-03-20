@@ -41,3 +41,39 @@ describe('Testando o Login', () => {
     cy.contains('p', 'Você precisa de uma senha para entrar! 🔒')
   })
 })
+
+describe('Testando o cadastro', () => {
+  it('Cadastrar com sucesso', () => {
+    cy.visit(`${url}/register`)
+
+    cy.get('#name').type('Senaí Cypress Fiama')
+    cy.get('#email').type('senaicypressfiama@gmail.com')
+    cy.get('#password').type('senaicypress')
+
+    cy.get('button[type="submit"]').click()
+  })
+
+  it('Tentar cadastrar com um email já cadastrado', () => {
+    cy.visit(`${url}/register`)
+
+    cy.get('#name').type('Senaí Cypress Fiama')
+    cy.get('#email').type('4dt@gmail.com')
+    cy.get('#password').type('senaicypress')
+
+    cy.get('button[type="submit"]').click()
+
+    cy.contains('.title', 'Erro ao criar conta')
+  })
+
+  it('Tentar cadastrar com uma senha fraca', () => {
+    cy.visit(`${url}/register`)
+
+    cy.get('#name').type('Senaí Cypress Fiama')
+    cy.get('#email').type('teste@gmail.com')
+    cy.get('#password').type('teste')
+
+    cy.get('button[type="submit"]').click()
+
+    cy.contains('p', 'Essa senha está meio fraquinha... que tal uma com pelo menos 6 caracteres? 💪')
+  })
+})
